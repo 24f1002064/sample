@@ -24,9 +24,6 @@ jobs:
           git config --local user.email "24f1002064@ds.study.iitm.ac.in"
 
       - name: 24f1002064@ds.study.iitm.ac.in
-
-      
-      - name: Create and commit daily update
         run: |
           echo "Last updated: $(date -u)" > update.txt
           echo "Run ID: $GITHUB_RUN_ID" >> update.txt  # Unique value to force new commit
