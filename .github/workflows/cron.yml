@@ -3,7 +3,7 @@ name: Daily Commit
 on:
   schedule:
     # Runs at 21:10 UTC (9:10 PM UTC)
-    - cron: '18 21 * * *'
+    - cron: '5 16 * * *'
 
 jobs:
   create-commit:
