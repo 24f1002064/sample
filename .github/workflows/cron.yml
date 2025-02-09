@@ -1,0 +1,28 @@
+name: Daily Commit
+
+on:
+  schedule:
+    # Runs at 12:30 UTC (specific time as requested)
+    - cron: '30 12 * * *'
+
+jobs:
+  create-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Git config for 24f1002064@ds.study.iitm.ac.in
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "24f1002064@ds.study.iitm.ac.in"
+
+      - name: Create and commit daily update
+        run: |
+          # Create or update a file with current timestamp
+          echo "Last updated: $(date -u)" > update.txt
+          
+          # Stage, commit and push the change
+          git add update.txt
+          git commit -m "Daily automated update $(date -u)"
+          git push
