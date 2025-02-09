@@ -2,8 +2,8 @@ name: Daily Commit
 
 on:
   schedule:
-    # Runs at 21:10 UTC (9:10 PM UTC)
-    - cron: '5 16 * * *'
+    # Runs at 16:20 UTC (9:50 PM IST)
+    - cron: '20 16 * * *'
 
 jobs:
   create-commit:
@@ -14,26 +14,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # Ensure we have full git history
-          fetch-depth: 0
+          fetch-depth: 0  # Ensure full git history
 
-      - name: Setup Git config for 24f1002064@ds.study.iitm.ac.in
+      - name: Setup Git config
         run: |
           git config --local user.name "GitHub Actions Bot"
           git config --local user.email "24f1002064@ds.study.iitm.ac.in"
 
       - name: Create and commit daily update
         run: |
-          # Create or update a file with current timestamp
           echo "Last updated: $(date -u)" > update.txt
+          echo "Run ID: $GITHUB_RUN_ID" >> update.txt  # Unique value to force new commit
           
-          # Stage the changes
           git add update.txt
-          
-          # Create commit
           git commit -m "Daily automated update $(date -u)"
-          
-          # Push using the built-in GITHUB_TOKEN
-          git push origin HEAD:${GITHUB_REF#refs/heads/}
+          git push origin HEAD
         env:
-          GITHUB_TOKEN: ${{ secrets.TT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
